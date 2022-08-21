@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Dashboard } from './components/Dashboard';
+import { Header } from './components/Header';
+import { GlobalStyle } from './styles/global';
+import Modal from 'react-modal'
+import { useState } from 'react';
+import { NewTransactionModal } from './components/NewTransactionModal';
 
-function App() {
+/* Modal.setAppElement('root') */ /* melhor acessibilidade */
+
+export function App() {
+
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
+    /* a primeira é o estado a segunda a função pra mudar o estado */
+  function handleOpenNewTransactionModal(){
+    setIsNewTransactionModalOpen(true)
+        /* seta q o estado do isNewTransactionModalOpen para verdadeiro */
+  }
+  function handleCloseNewTransactionModal(){
+    setIsNewTransactionModalOpen(false)
+
+        /* seta q o estado do isNewTransactionModalOpen para falso */
+  }
+    /* e bom sempre iniciar o nome de uma função
+     que precisar de input do usuario com handle
+    entao sempre que fizermos uma função em que
+    o usuario vai clicar ou executar alguma coisa
+    iniciamos com handle */
+
+    
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <> 
+      <Header onOpenNewTransactionModal={handleOpenNewTransactionModal}/>
+      {/* ao passar essa função nos podemos fazer com que elementos/componentes filhos
+      possam alterar o estado de outros componentes 
+      nesse caso estamos passando a nossa função de abrir o modal como propriedade
+      la para o botão que esta no header em outro componente */}
+
+      <Dashboard/> {/* importa/usa o components importado */}
+
+      <NewTransactionModal
+      isOpen={isNewTransactionModalOpen}
+      /* define que o isOpen é igual o estado do
+      isNewTransactionModalOpen */
+      onRequestClose={handleCloseNewTransactionModal}
+      /* executa a função de fechar o modal */
+      />
+
+      <GlobalStyle/> {/* aplica o global style q criamos */}
+
+      
+    </>
   );
 }
-
-export default App;
