@@ -1,9 +1,9 @@
 import { Dashboard } from './components/Dashboard';
 import { Header } from './components/Header';
 import { GlobalStyle } from './styles/global';
-import Modal from 'react-modal'
 import { useState } from 'react';
 import { NewTransactionModal } from './components/NewTransactionModal';
+import { TransactionsProvider } from './hooks/useTransactions';
 
 /* Modal.setAppElement('root') */ /* melhor acessibilidade */
 
@@ -28,7 +28,7 @@ export function App() {
 
     
   return (
-    <> 
+    <TransactionsProvider> 
       <Header onOpenNewTransactionModal={handleOpenNewTransactionModal}/>
       {/* ao passar essa função nos podemos fazer com que elementos/componentes filhos
       possam alterar o estado de outros componentes 
@@ -48,6 +48,6 @@ export function App() {
       <GlobalStyle/> {/* aplica o global style q criamos */}
 
       
-    </>
+    </TransactionsProvider>
   );
 }
